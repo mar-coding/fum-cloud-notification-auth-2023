@@ -7,37 +7,14 @@ import (
 	"auth_user/app/services"
 	"auth_user/app/utils"
 	"fmt"
+	"log"
+	"net"
 
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
-
-	//"gorm.io/driver/postgres"
-	//"gorm.io/driver/sqlite"
-
-	//"gorm.io/gorm"
-	"log"
-	"net"
 )
 
-//func createPgDb() {
-//	cmd := exec.Command("createdb", "-p", "5432", "-h", "127.0.0.1", "-U", "superuser", "-e", "test_db")
-//
-//	var out bytes.Buffer
-//	cmd.Stdout = &out
-//	if err := cmd.Run(); err != nil {
-//		log.Printf("Error: %v", err)
-//	}
-//	log.Printf("Output: %q\n", out.String())
-//}
-
 func main() {
-	//createPgDb()
-	//db1, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
-
-	//fmt.Println("sdsdfsd")
-	//if err != nil {
-	//	panic("failed to connect database")
-	//}
 	c, err := config.LoadConfig()
 
 	if err != nil {
@@ -72,5 +49,4 @@ func main() {
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalln("Failed to serve:", err)
 	}
-
 }
