@@ -1,11 +1,12 @@
 package db
 
 import (
+	"auth_user/app/models"
 	"fmt"
 	"log"
+	"os"
 
-	"auth_user/app/models"
-
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -15,14 +16,22 @@ type Handler struct {
 }
 
 func Init(url string) Handler {
-	// dsn := "host=localhost user=postgres password=postgres dbname=postgres port=5432 sslmode=disable TimeZone=Asia/Shanghai"
-	db, err := gorm.Open(postgres.Open(url), &gorm.Config{})
-	fmt.Println(url)
+	godotenv.Load("./envs/dev.env")
+	var (
+		host     = os.Getenv("POSTGRES_HOST")
+		port     = os.Getenv("POSTGRES_PORT")
+		user     = os.Getenv("POSTGRES_USER")
+		password = os.Getenv("POSTGRES_PASSWORD")
+		dbname   = os.Getenv("POSTGRES_DB")
+	)
+
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai", host, user, password, dbname, port)
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal("Failed to connect to the Database")
 	}
-
+	fmt.Println("Connected Successfully to the Database")
+	print(db)
 	db.AutoMigrate(&models.User{})
-
 	return Handler{db}
 }
