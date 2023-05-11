@@ -1,8 +1,9 @@
 version: "3.8"
-
+# maintainer: MohammadAmin Rahimi <marcoding78@gmail.com>
 services:
   database:
     image: postgres
+    container_name: authDatabase
     restart: always
     environment:
       - POSTGRES_NAME=postgres
@@ -11,7 +12,21 @@ services:
     ports:
       - 5439:5432
     volumes:
-      - db:/var/lib/postgresql/data
-
+      - dbAuth:/var/lib/postgresql/data
+    networks:
+      - auth_net
+  app:
+    build: .
+    container_name: authApp
+    restart: always
+    ports:
+      - "8082:8082"
+    depends_on:
+      - database
+    networks:
+      - auth_net
 volumes:
-  db:
+  dbAuth:
+
+networks:
+  auth_net:
