@@ -29,3 +29,7 @@ Run this project locally
    go build cmd/main.go
    ./main
   ```
+Run this project on containers
+  ```
+   docker compose up --build
+  ```
