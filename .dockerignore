@@ -1,0 +1,23 @@
+# Exclude editor-specific files
+.vscode/
+.idea/
+
+# Exclude build artifacts and directories
+bin/
+obj/
+*.o
+*.a
+
+# Exclude version control files and directories
+.git/
+.gitignore
+
+# Exclude test files
+*_test.go
+
+# Exclude documentation and development files
+docs/
+examples/
+test/
+
+# Exclude any other unnecessary files or directories
