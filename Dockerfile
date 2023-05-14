@@ -1,4 +1,4 @@
-FROM golang:1.17-alpine
+FROM golang:1.17-alpine AS BuildStage 
 
 ENV GOPROXY=https://goproxy.io,direct 
 WORKDIR /app
@@ -9,6 +9,17 @@ RUN go mod download
 COPY . .
 
 RUN go build -o main cmd/main.go
+
+EXPOSE 8082
+
+# Deploy stage
+
+FROM alpine:3.14
+
+WORKDIR /app
+
+COPY --from=BuildStage /app/main .
+COPY --from=BuildStage /app/envs /app/envs
 
 EXPOSE 8082
 
