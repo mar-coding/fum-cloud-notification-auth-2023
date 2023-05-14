@@ -16,7 +16,8 @@ services:
     networks:
       - auth_net
   app:
-    build: .
+    # build: .
+    image: amnrah/fum-cloud-notification-auth-2023:cloud-v1.1.0
     container_name: authApp
     restart: always
     ports:
