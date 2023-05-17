@@ -26,8 +26,11 @@ services:
       - database
     networks:
       - auth_net
+      - shared_net
 volumes:
   dbAuth:
 
 networks:
   auth_net:
+  shared_net:
+    external: true
